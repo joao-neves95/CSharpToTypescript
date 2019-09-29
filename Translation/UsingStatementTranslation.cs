@@ -6,13 +6,8 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,11 +20,11 @@ namespace RoslynTypeScript.Translation
         }
 
         public UsingStatementTranslation() { }
-        public UsingStatementTranslation(UsingStatementSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public UsingStatementTranslation(UsingStatementSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Declaration = syntax.Declaration.Get<VariableDeclarationTranslation>(this);
-            Expression = syntax.Expression.Get<ExpressionTranslation>(this);
-            Statement = syntax.Statement.Get<StatementTranslation>(this);
+            Declaration = syntax.Declaration.Get<VariableDeclarationTranslation>( this );
+            Expression = syntax.Expression.Get<ExpressionTranslation>( this );
+            Statement = syntax.Statement.Get<StatementTranslation>( this );
 
             //if(Expression != null)
             //{
@@ -52,7 +47,7 @@ namespace RoslynTypeScript.Translation
 
             string variable = Declaration?.Variables.GetEnumerable().First().Identifier.ToString() ?? "__temp";
             string block = Statement.Translate();
-            if(!(Statement is BlockTranslation))
+            if (!(Statement is BlockTranslation))
             {
                 block = $@"{{
                     {block}
@@ -66,7 +61,7 @@ namespace RoslynTypeScript.Translation
                 finally {{
                 {callDisposable} 
                 }}";
-            
+
 
             //return Syntax.ToString();
         }

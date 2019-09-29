@@ -8,11 +8,6 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -26,7 +21,7 @@ namespace RoslynTypeScript.Translation
 
         public IdentifierNameTranslation() { }
 
-        public IdentifierNameTranslation(IdentifierNameSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public IdentifierNameTranslation(IdentifierNameSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
 
         }
@@ -40,12 +35,12 @@ namespace RoslynTypeScript.Translation
             get
             {
                 var semantic = GetSemanticModel();
-                if(semantic == null)
+                if (semantic == null)
                 {
                     return false;
                 }
 
-                var symbolInfo = semantic.GetSymbolInfo(this.Syntax);
+                var symbolInfo = semantic.GetSymbolInfo( this.Syntax );
                 if (symbolInfo.Symbol != null && symbolInfo.Symbol is IMethodSymbol)
                 {
                     return symbolInfo.Symbol.IsStatic;
@@ -65,8 +60,8 @@ namespace RoslynTypeScript.Translation
                     return false;
                 }
 
-                var symbolInfo = semantic.GetSymbolInfo(this.Syntax);
-                if (symbolInfo.Symbol != null )
+                var symbolInfo = semantic.GetSymbolInfo( this.Syntax );
+                if (symbolInfo.Symbol != null)
                 {
                     return symbolInfo.Symbol.IsStatic;
                 }
@@ -78,7 +73,7 @@ namespace RoslynTypeScript.Translation
         protected override string InnerTranslate()
         {
             string syntaxStr = Syntax.ToString();
-             syntaxStr = Helper.NormalizeVariabeleName(syntaxStr);
+            syntaxStr = Helper.NormalizeVariabeleName( syntaxStr );
 
             // hopefully we guess right
             if (syntaxStr == "DateTime" && !(Parent is TypeTranslation))
@@ -94,14 +89,14 @@ namespace RoslynTypeScript.Translation
             if (!DetectApplyThis && TypeArgumentList != null)
             {
                 return $"{syntaxStr}{TypeArgumentList.Translate()}";
-            }          
+            }
 
-            if (IsArrayType(syntaxStr))
+            if (IsArrayType( syntaxStr ))
             {
                 return "Array<any>";
             }
 
-            if (IsLengthArrayOrString(syntaxStr))
+            if (IsLengthArrayOrString( syntaxStr ))
             {
                 return "length";
             }
@@ -111,14 +106,14 @@ namespace RoslynTypeScript.Translation
                 return syntaxStr;
             }
 
-            var result = HandleApplyStaticOrThis(syntaxStr);
+            var result = HandleApplyStaticOrThis( syntaxStr );
             if (result != null)
             {
                 return result;
             }
 
             return syntaxStr;
-        }       
+        }
 
         public bool IsInnerType(ISymbol symbol)
         {
@@ -144,19 +139,19 @@ namespace RoslynTypeScript.Translation
             }
 
             SemanticModel semanticModel = GetSemanticModel();
-            if(semanticModel == null)
+            if (semanticModel == null)
             {
                 return false;
             }
 
-            SymbolInfo symbolInfo = semanticModel.GetSymbolInfo(Syntax);
+            SymbolInfo symbolInfo = semanticModel.GetSymbolInfo( Syntax );
             if (symbolInfo.Symbol == null)
             {
                 return false;
             }
 
-            return symbolInfo.Symbol.ContainingType == GetCompilation().GetTypeByMetadataName("System.Array")
-                || symbolInfo.Symbol.ContainingType == GetCompilation().GetTypeByMetadataName("System.String");
+            return symbolInfo.Symbol.ContainingType == GetCompilation().GetTypeByMetadataName( "System.Array" )
+                || symbolInfo.Symbol.ContainingType == GetCompilation().GetTypeByMetadataName( "System.String" );
         }
 
         private bool IsArrayType(string syntaxStr)
@@ -172,9 +167,9 @@ namespace RoslynTypeScript.Translation
                 return false;
             }
 
-            SymbolInfo symbolInfo = semanticModel.GetSymbolInfo(Syntax);
+            SymbolInfo symbolInfo = semanticModel.GetSymbolInfo( Syntax );
 
-            return symbolInfo.Symbol == GetCompilation().GetTypeByMetadataName("System.Array");
+            return symbolInfo.Symbol == GetCompilation().GetTypeByMetadataName( "System.Array" );
         }
     }
 }

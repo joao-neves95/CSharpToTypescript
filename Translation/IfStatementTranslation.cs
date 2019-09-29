@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -27,11 +21,11 @@ namespace RoslynTypeScript.Translation
         public IfStatementTranslation() { }
 
 
-        public IfStatementTranslation(IfStatementSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public IfStatementTranslation(IfStatementSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Condition = syntax.Condition.Get<ExpressionTranslation>(this);
-            Statement = syntax.Statement.Get<StatementTranslation>(this);
-            Else = syntax.Else.Get<ElseClauseTranslation>(this);
+            Condition = syntax.Condition.Get<ExpressionTranslation>( this );
+            Statement = syntax.Statement.Get<StatementTranslation>( this );
+            Else = syntax.Else.Get<ElseClauseTranslation>( this );
         }
 
         public ExpressionTranslation Condition { get; set; }

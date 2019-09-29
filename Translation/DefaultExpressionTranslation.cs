@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -24,15 +18,15 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
         public DefaultExpressionTranslation() { }
-        public DefaultExpressionTranslation(DefaultExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public DefaultExpressionTranslation(DefaultExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Type = syntax.Type.Get<TypeTranslation>(this);
+            Type = syntax.Type.Get<TypeTranslation>( this );
         }
 
         public TypeTranslation Type { get; set; }
         protected override string InnerTranslate()
         {
-            return Helper.GetDefaultValue(Type);
+            return Helper.GetDefaultValue( Type );
         }
     }
 }

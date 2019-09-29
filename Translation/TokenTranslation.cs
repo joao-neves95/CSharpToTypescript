@@ -7,11 +7,6 @@
  */
 
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -21,7 +16,7 @@ namespace RoslynTypeScript.Translation
         public TokenTranslation()
         { }
 
-        public TokenTranslation(SyntaxToken token, SyntaxTranslation parent) : base(null, parent)
+        public TokenTranslation(SyntaxToken token, SyntaxTranslation parent) : base( null, parent )
         {
             this.token = token;
 
@@ -29,7 +24,7 @@ namespace RoslynTypeScript.Translation
 
         protected override string InnerTranslate()
         {
-            return Helper.NormalizeVariabeleName(token.ToString());
+            return Helper.NormalizeVariabeleName( token.ToString() );
         }
 
         public virtual bool IsEmpty

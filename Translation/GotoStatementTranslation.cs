@@ -6,14 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace RoslynTypeScript.Translation
 {
@@ -26,16 +19,16 @@ namespace RoslynTypeScript.Translation
         }
 
         public GotoStatementTranslation() { }
-        public GotoStatementTranslation(GotoStatementSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public GotoStatementTranslation(GotoStatementSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            
+
         }
 
         public ExpressionTranslation Expression { get; set; }
 
         protected override string InnerTranslate()
         {
- 
+
             return Syntax.ToString();
         }
     }

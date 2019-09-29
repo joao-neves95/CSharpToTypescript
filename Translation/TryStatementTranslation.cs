@@ -8,11 +8,8 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,11 +22,11 @@ namespace RoslynTypeScript.Translation
         }
 
         public TryStatementTranslation() { }
-        public TryStatementTranslation(TryStatementSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public TryStatementTranslation(TryStatementSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Block = syntax.Block.Get<BlockTranslation>(this);
-            Catches = syntax.Catches.Get<CatchClauseSyntax, CatchClauseTranslation>(this);
-            Finally = syntax.Finally.Get<FinallyClauseTranslation>(this);
+            Block = syntax.Block.Get<BlockTranslation>( this );
+            Catches = syntax.Catches.Get<CatchClauseSyntax, CatchClauseTranslation>( this );
+            Finally = syntax.Finally.Get<FinallyClauseTranslation>( this );
         }
 
         public BlockTranslation Block { get; set; }
@@ -44,7 +41,7 @@ namespace RoslynTypeScript.Translation
                 finallyStr = Finally.Translate();
             }
 
-            
+
 
             if (Catches.GetEnumerable().Count() > 1)
             {
@@ -77,7 +74,7 @@ namespace RoslynTypeScript.Translation
 
                 str += $"if( {name } instanceof {item.Syntax.Declaration.Type})"
                     + $"\n {item.Block} \n";
-                bd.Append(str);
+                bd.Append( str );
             }
 
             return bd.ToString();

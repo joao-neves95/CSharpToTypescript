@@ -9,11 +9,8 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynTypeScript.Constants;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -26,9 +23,9 @@ namespace RoslynTypeScript.Translation
         }
 
         public IndexerDeclarationTranslation() { }
-        public IndexerDeclarationTranslation(IndexerDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public IndexerDeclarationTranslation(IndexerDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            ParameterList = syntax.ParameterList.Get<BracketedParameterListTranslation>(this);
+            ParameterList = syntax.ParameterList.Get<BracketedParameterListTranslation>( this );
         }
 
         public BracketedParameterListTranslation ParameterList { get; set; }
@@ -38,14 +35,14 @@ namespace RoslynTypeScript.Translation
             if (IsInScope<InterfaceDeclarationTranslation>())
             {
                 StringBuilder bd = new StringBuilder();
-                if (AccessorList.Accessors.GetEnumerable().Any(f => f.Syntax.Keyword.ToString() == "get"))
+                if (AccessorList.Accessors.GetEnumerable().Any( f => f.Syntax.Keyword.ToString() == "get" ))
                 {
-                    bd.Append($"{TC.IndexerGetName}({ParameterList.Parameters.Translate()}) :{Type.Translate()};");
+                    bd.Append( $"{TC.IndexerGetName}({ParameterList.Parameters.Translate()}) :{Type.Translate()};" );
                 }
 
-                if (AccessorList.Accessors.GetEnumerable().Any(f => f.Syntax.Keyword.ToString() == "set"))
+                if (AccessorList.Accessors.GetEnumerable().Any( f => f.Syntax.Keyword.ToString() == "set" ))
                 {
-                    bd.Append($"{TC.IndexerSetName}({ParameterList.Parameters.Translate()}, value :{Type.Translate()}):void;");
+                    bd.Append( $"{TC.IndexerSetName}({ParameterList.Parameters.Translate()}, value :{Type.Translate()}):void;" );
                 }
 
                 return bd.ToString();

@@ -7,12 +7,6 @@
  */
 
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using RoslynTypeScript.Translation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -30,9 +24,9 @@ namespace RoslynTypeScript.Translation
         {
         }
 
-        public ParameterListTranslation(ParameterListSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ParameterListTranslation(ParameterListSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Parameters = syntax.Parameters.Get<ParameterSyntax, ParameterTranslation>(this);
+            Parameters = syntax.Parameters.Get<ParameterSyntax, ParameterTranslation>( this );
         }
 
         private bool excludeDefaultValue;
@@ -40,7 +34,8 @@ namespace RoslynTypeScript.Translation
         public bool ExcludeDefaultValue
         {
             get { return excludeDefaultValue; }
-            set {
+            set
+            {
                 excludeDefaultValue = value;
                 foreach (var item in Parameters.GetEnumerable())
                 {

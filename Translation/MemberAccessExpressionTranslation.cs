@@ -6,14 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace RoslynTypeScript.Translation
 {
@@ -28,12 +21,12 @@ namespace RoslynTypeScript.Translation
         public ExpressionTranslation Expression { get; set; }
         public SimpleNameTranslation Name { get; set; }
 
-        public bool IsInInvocation { get; set; }       
+        public bool IsInInvocation { get; set; }
 
-        public MemberAccessExpressionTranslation(MemberAccessExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public MemberAccessExpressionTranslation(MemberAccessExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Expression = syntax.Expression.Get<ExpressionTranslation>(this);
-            Name = syntax.Name.Get<SimpleNameTranslation>(this);
+            Expression = syntax.Expression.Get<ExpressionTranslation>( this );
+            Name = syntax.Name.Get<SimpleNameTranslation>( this );
 
             var simpleName = Name as SimpleNameTranslation;
 
@@ -66,13 +59,13 @@ namespace RoslynTypeScript.Translation
         {
 
             string str = Syntax.ToString();
-    
+
             return NormalTranslate();
         }
 
         private string NormalTranslate()
         {
-            return string.Format("{0}{1}{2}", Expression.Translate(), Syntax.OperatorToken.ToString(), Name.Translate());
+            return string.Format( "{0}{1}{2}", Expression.Translate(), Syntax.OperatorToken.ToString(), Name.Translate() );
         }
     }
 }

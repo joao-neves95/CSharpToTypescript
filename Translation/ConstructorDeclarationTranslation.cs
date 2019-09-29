@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -29,13 +23,13 @@ namespace RoslynTypeScript.Translation
         public ConstructorDeclarationTranslation() { }
 
         public bool IsDeclarationOverload { get; set; }
-        public ConstructorDeclarationTranslation(ConstructorDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ConstructorDeclarationTranslation(ConstructorDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Identifier = syntax.Identifier.Get(this);
+            Identifier = syntax.Identifier.Get( this );
 
             if (syntax.Initializer != null)
             {
-                Initializer = syntax.Initializer.Get<ConstructorInitializerTranslation>(this);
+                Initializer = syntax.Initializer.Get<ConstructorInitializerTranslation>( this );
             }
         }
 
@@ -58,7 +52,7 @@ namespace RoslynTypeScript.Translation
             if (SemicolonToken == null || SemicolonToken.IsEmpty)
             {
                 string baseCall = string.Empty;
-                if(Initializer!=null)
+                if (Initializer != null)
                 {
                     return $@" {identifier} {ParameterList.Translate()}
                         {{

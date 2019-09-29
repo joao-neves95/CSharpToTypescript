@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,13 +19,13 @@ namespace RoslynTypeScript.Translation
         }
 
         public BasePropertyDeclarationTranslation() { }
-        public BasePropertyDeclarationTranslation(BasePropertyDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public BasePropertyDeclarationTranslation(BasePropertyDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Type = syntax.Type.Get<TypeTranslation>(this);
-            AccessorList = syntax.AccessorList.Get<AccessorListTranslation>(this);
-            Modifiers = syntax.Modifiers.Get(this);
+            Type = syntax.Type.Get<TypeTranslation>( this );
+            AccessorList = syntax.AccessorList.Get<AccessorListTranslation>( this );
+            Modifiers = syntax.Modifiers.Get( this );
 
-            AccessorList.SetModifier(Modifiers);
+            AccessorList.SetModifier( Modifiers );
         }
 
         public AccessorListTranslation AccessorList { get; set; }

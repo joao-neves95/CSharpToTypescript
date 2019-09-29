@@ -34,7 +34,7 @@
 
 //        protected override string InnerTranslate()
 //        {
-            
+
 //            //return Syntax.ToString();
 //            return $"'{Argument.Translate()}'";
 //        }

@@ -73,8 +73,8 @@
 //                {{";
 //            string posfix = @"break; 
 //                        }";
-            
-            
+
+
 
 //            var foundStatement = list.SyntaxCollection[min];
 //            if(endStatement.Syntax.Span.Contains(foundStatement.Syntax.Span))
@@ -91,7 +91,7 @@
 //                //foundStatement.SyntaxString = $"{prefix} \r\n {foundStatement.Translate()}";
 //                //endStatement.SyntaxString = $"{endStatement.Translate()} {posfix}";
 //            }
-                        
+
 //        }
 //    }
 //}

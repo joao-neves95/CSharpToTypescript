@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,18 +19,18 @@ namespace RoslynTypeScript.Translation
         }
 
         public ForStatementTranslation() { }
-        public ForStatementTranslation(ForStatementSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ForStatementTranslation(ForStatementSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
             //KeyValuePair<int, string>? a = null;            
             //var b = ((bool?)null)?.Equals(false) ?? true ? false ? true : false :true;
 
             //string str = "\{ ("\{( "(\{ "{}" })" )}") }";
 
-            Condition = syntax.Condition.Get<ExpressionTranslation>(this);
-            Declaration = syntax.Declaration.Get<VariableDeclarationTranslation>(this);
-            Incrementors = syntax.Incrementors.Get<ExpressionSyntax, ExpressionTranslation>(this);
-            Initializers = syntax.Initializers.Get<ExpressionSyntax, ExpressionTranslation>(this);
-            Statement = syntax.Statement.Get<StatementTranslation>(this);
+            Condition = syntax.Condition.Get<ExpressionTranslation>( this );
+            Declaration = syntax.Declaration.Get<VariableDeclarationTranslation>( this );
+            Incrementors = syntax.Incrementors.Get<ExpressionSyntax, ExpressionTranslation>( this );
+            Initializers = syntax.Initializers.Get<ExpressionSyntax, ExpressionTranslation>( this );
+            Statement = syntax.Statement.Get<StatementTranslation>( this );
         }
 
         public ExpressionTranslation Condition { get; set; }

@@ -6,19 +6,11 @@
  *
  */
 
-using System;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.Win32;
+using System;
 using System.ComponentModel;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace CSharpToTypescript.VSIX
 {
@@ -39,12 +31,12 @@ namespace CSharpToTypescript.VSIX
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true)]
-    [InstalledProductRegistration("#1110", "#1112", "1.0", IconResourceID = 1400)] // Info on this package for Help/About
-    [Guid(ToolOptions.PackageGuidString)]
-    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    [ProvideOptionPage(typeof(OptionPageGrid),
-    "Typescript Paste", "General", 0, 0, true)]
+    [PackageRegistration( UseManagedResourcesOnly = true )]
+    [InstalledProductRegistration( "#1110", "#1112", "1.0", IconResourceID = 1400 )] // Info on this package for Help/About
+    [Guid( ToolOptions.PackageGuidString )]
+    [SuppressMessage( "StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms" )]
+    [ProvideOptionPage( typeof( OptionPageGrid ),
+    "Typescript Paste", "General", 0, 0, true )]
     public sealed class ToolOptions : Package
     {
         /// <summary>
@@ -75,8 +67,21 @@ namespace CSharpToTypescript.VSIX
             Instance = this;
         }
 
+
+        /* Unmerged change from project 'CSharpToTypescript (net472)'
+        Before:
+                public static ToolOptions Instance { get; set; }
+
+
+                #endregion
+        After:
+                public static ToolOptions Instance { get; set; }
+
+
+                #endregion
+        */
         public static ToolOptions Instance { get; set; }
-        
+
 
         #endregion
     }
@@ -86,21 +91,22 @@ namespace CSharpToTypescript.VSIX
         private bool isConvertToInterface = false;
 
 
-        [Category("Typescript Paste")]
-        [DisplayName("Convert to interface")]
-        [Description("Convert to interfaces for classes, structs")]
+        [Category( "Typescript Paste" )]
+        [DisplayName( "Convert to interface" )]
+        [Description( "Convert to interfaces for classes, structs" )]
         public bool IsConvertToInterface
         {
             get { return isConvertToInterface; }
-            set {
+            set
+            {
                 isConvertToInterface = value;
                 SettingStore.Instance.IsConvertToInterface = value;
             }
         }
 
-        [Category("Typescript Paste")]
-        [DisplayName("Convert members to camelcase")]
-        [Description("Convert to member names to camel case")]
+        [Category( "Typescript Paste" )]
+        [DisplayName( "Convert members to camelcase" )]
+        [Description( "Convert to member names to camel case" )]
         public bool IsConvertMemberToCamelCase
         {
             get { return SettingStore.Instance.IsConvertMemberToCamelCase; }
@@ -110,9 +116,9 @@ namespace CSharpToTypescript.VSIX
             }
         }
 
-        [Category("Typescript Paste")]
-        [DisplayName("Add ? as optional properties or methods")]
-        [Description("Add ? as optional properties or methods")]
+        [Category( "Typescript Paste" )]
+        [DisplayName( "Add ? as optional properties or methods" )]
+        [Description( "Add ? as optional properties or methods" )]
         public bool IsOptionalInterfacePropertiesMethods
         {
             get { return SettingStore.Instance.IsInterfaceOptionalProperties; }
@@ -122,9 +128,9 @@ namespace CSharpToTypescript.VSIX
             }
         }
 
-        [Category("Typescript Paste")]
-        [DisplayName("Convert List<T> to array T[]")]
-        [Description("Convert List to array T[]")]
+        [Category( "Typescript Paste" )]
+        [DisplayName( "Convert List<T> to array T[]" )]
+        [Description( "Convert List to array T[]" )]
         public bool IsConvertListToArray
         {
             get { return SettingStore.Instance.IsConvertListToArray; }
@@ -134,9 +140,9 @@ namespace CSharpToTypescript.VSIX
             }
         }
 
-        [Category("Typescript Paste")]
-        [DisplayName("Replace Type name")]
-        [Description("Replace type name with another name")]
+        [Category( "Typescript Paste" )]
+        [DisplayName( "Replace Type name" )]
+        [Description( "Replace type name with another name" )]
         public TypeNameReplacementData[] ReplacedTypeNameArray
         {
             get { return SettingStore.Instance.ReplacedTypeNameArray; }
@@ -146,9 +152,9 @@ namespace CSharpToTypescript.VSIX
             }
         }
 
-        [Category("Typescript Paste")]
-        [DisplayName("Add 'I' To Interface Declaration")]
-        [Description("Add 'I' Prefix To Interface Declaration")]
+        [Category( "Typescript Paste" )]
+        [DisplayName( "Add 'I' To Interface Declaration" )]
+        [Description( "Add 'I' Prefix To Interface Declaration" )]
         public bool AddIPrefixInterfaceDeclaration
         {
             get { return SettingStore.Instance.AddIPrefixInterfaceDeclaration; }
@@ -159,17 +165,17 @@ namespace CSharpToTypescript.VSIX
         }
     }
 
-    [Description("Define type name to be replaced")]
+    [Description( "Define type name to be replaced" )]
     public class TypeNameReplacementData
     {
-        [DisplayName("Type Name")]
+        [DisplayName( "Type Name" )]
         public string OldTypeName { get; set; }
-        [DisplayName("New Type Name")]
+        [DisplayName( "New Type Name" )]
         public string NewTypeName { get; set; }
 
         public override string ToString()
         {
-            return string.Format("{0} => {1}", OldTypeName ?? "name", NewTypeName ?? "new name");
+            return string.Format( "{0} => {1}", OldTypeName ?? "name", NewTypeName ?? "new name" );
         }
 
     }

@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -24,9 +18,9 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
         public ParenthesizedExpressionTranslation() { }
-        public ParenthesizedExpressionTranslation(ParenthesizedExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ParenthesizedExpressionTranslation(ParenthesizedExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Expression = syntax.Expression.Get<ExpressionTranslation>(this);
+            Expression = syntax.Expression.Get<ExpressionTranslation>( this );
         }
 
         public ExpressionTranslation Expression { get; set; }

@@ -8,11 +8,7 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,10 +21,10 @@ namespace RoslynTypeScript.Translation
         }
 
         public ArrayCreationExpressionTranslation() { }
-        public ArrayCreationExpressionTranslation(ArrayCreationExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ArrayCreationExpressionTranslation(ArrayCreationExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Type = syntax.Type.Get<ArrayTypeTranslation>(this);
-            Initializer = syntax.Initializer.Get<InitializerExpressionTranslation>(this);
+            Type = syntax.Type.Get<ArrayTypeTranslation>( this );
+            Initializer = syntax.Initializer.Get<InitializerExpressionTranslation>( this );
         }
 
         public ArrayTypeTranslation Type { get; set; }
@@ -41,8 +37,8 @@ namespace RoslynTypeScript.Translation
             if (Initializer == null)
             {
                 var semantic = GetSemanticModel();
-                var typeInfo = semantic.GetTypeInfo(Type.ElementType.Syntax);
-                
+                var typeInfo = semantic.GetTypeInfo( Type.ElementType.Syntax );
+
                 string size = Type.RankSpecifiers.GetEnumerable().First().Sizes.Translate();
                 return $"new Array({size})";
             }

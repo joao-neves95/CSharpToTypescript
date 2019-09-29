@@ -9,10 +9,7 @@
 using RoslynTypeScript.Contract;
 using RoslynTypeScript.Translation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Patch
 {
@@ -25,7 +22,7 @@ namespace RoslynTypeScript.Patch
         public void Apply(ITypeParameterConstraint typeDeclarationTranslation)
         {
 
-            if(typeDeclarationTranslation.TypeParameterList == null)
+            if (typeDeclarationTranslation.TypeParameterList == null)
             {
                 return;
             }
@@ -34,7 +31,7 @@ namespace RoslynTypeScript.Patch
             foreach (TypeParameterTranslation item in parameters)
             {
                 var foundClause = typeDeclarationTranslation.ConstraintClauses
-                    .GetEnumerable().FirstOrDefault(f => f.Name.Translate() == item.Syntax.Identifier.ToString());
+                    .GetEnumerable().FirstOrDefault( f => f.Name.Translate() == item.Syntax.Identifier.ToString() );
                 if (foundClause == null)
                 {
                     continue;
@@ -48,7 +45,7 @@ namespace RoslynTypeScript.Patch
 
                 if (constraints.Length > 1)
                 {
-                    throw new NotSupportedException("not support multiple constrants");
+                    throw new NotSupportedException( "not support multiple constrants" );
                 }
 
                 item.TypeConstraint = constraints[0].Type;

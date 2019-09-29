@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,10 +19,10 @@ namespace RoslynTypeScript.Translation
         }
 
         public ParenthesizedLambdaExpressionTranslation() { }
-        public ParenthesizedLambdaExpressionTranslation(ParenthesizedLambdaExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ParenthesizedLambdaExpressionTranslation(ParenthesizedLambdaExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Body = syntax.Body.Get<CSharpSyntaxTranslation>(this);
-            ParameterList = syntax.ParameterList.Get<ParameterListTranslation>(this);
+            Body = syntax.Body.Get<CSharpSyntaxTranslation>( this );
+            ParameterList = syntax.ParameterList.Get<ParameterListTranslation>( this );
         }
 
         public CSharpSyntaxTranslation Body { get; set; }

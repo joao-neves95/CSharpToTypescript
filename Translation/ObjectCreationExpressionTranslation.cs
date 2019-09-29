@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -24,11 +18,11 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
         public ObjectCreationExpressionTranslation() { }
-        public ObjectCreationExpressionTranslation(ObjectCreationExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ObjectCreationExpressionTranslation(ObjectCreationExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            ArgumentList = syntax.ArgumentList.Get<ArgumentListTranslation>(this);
-            Initializer = syntax.Initializer.Get<InitializerExpressionTranslation>(this);
-            Type = syntax.Type.Get<TypeTranslation>(this);
+            ArgumentList = syntax.ArgumentList.Get<ArgumentListTranslation>( this );
+            Initializer = syntax.Initializer.Get<InitializerExpressionTranslation>( this );
+            Type = syntax.Type.Get<TypeTranslation>( this );
         }
 
         public ArgumentListTranslation ArgumentList { get; set; }
@@ -40,7 +34,7 @@ namespace RoslynTypeScript.Translation
             var name = Type.Translate();
 
             // the case object creation only by Initializer
-            if(ArgumentList == null)
+            if (ArgumentList == null)
             {
                 ArgumentList = new ArgumentListTranslation()
                 {
@@ -50,7 +44,7 @@ namespace RoslynTypeScript.Translation
             }
 
 
-            if (Initializer == null )
+            if (Initializer == null)
             {
 
                 return $"new {Type.Translate()} {ArgumentList.Translate()}";

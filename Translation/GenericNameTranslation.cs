@@ -6,16 +6,9 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynTypeScript.VirtualTranslation;
 using RoslynTypeScript.VirtualTranslation.Delegates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -28,23 +21,23 @@ namespace RoslynTypeScript.Translation
         }
 
         public GenericNameTranslation() { }
-        public GenericNameTranslation(GenericNameSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public GenericNameTranslation(GenericNameSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            TypeArgumentList = syntax.TypeArgumentList.Get<TypeArgumentListTranslation>(this);
+            TypeArgumentList = syntax.TypeArgumentList.Get<TypeArgumentListTranslation>( this );
             string name = syntax.Identifier.ToString();
             switch (name)
             {
                 case "Func":
-                    Func = new FunctionTypeGenericNameTranslation(this);
+                    Func = new FunctionTypeGenericNameTranslation( this );
                     break;
                 case "Predicate":
-                    Func = new PredicateGenericNameTranslation(this);
+                    Func = new PredicateGenericNameTranslation( this );
                     break;
                 case "Action":
-                    Func = new ActionTypeGenericNameTranslation(this);
+                    Func = new ActionTypeGenericNameTranslation( this );
                     break;
                 case "Comparison":
-                    Func = new ComparisonGenericNameTranslation(this);
+                    Func = new ComparisonGenericNameTranslation( this );
                     break;
             }
 
