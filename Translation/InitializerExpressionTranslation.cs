@@ -7,13 +7,8 @@
  */
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace RoslynTypeScript.Translation
 {
@@ -26,18 +21,31 @@ namespace RoslynTypeScript.Translation
         }
 
         public InitializerExpressionTranslation() { }
-        public InitializerExpressionTranslation(InitializerExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public InitializerExpressionTranslation(InitializerExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Expressions = syntax.Expressions.Get<ExpressionSyntax, ExpressionTranslation>(this);
+            Expressions = syntax.Expressions.Get<ExpressionSyntax, ExpressionTranslation>( this );
         }
 
-        public SeparatedSyntaxListTranslation<ExpressionSyntax,ExpressionTranslation> Expressions { get; set; }
-        
+
+        /* Unmerged change from project 'CSharpToTypescript (net472)'
+        Before:
+                public SeparatedSyntaxListTranslation<ExpressionSyntax,ExpressionTranslation> Expressions { get; set; }
+
+
+                public override void ApplyPatch()
+        After:
+                public SeparatedSyntaxListTranslation<ExpressionSyntax,ExpressionTranslation> Expressions { get; set; }
+
+
+                public override void ApplyPatch()
+        */
+        public SeparatedSyntaxListTranslation<ExpressionSyntax, ExpressionTranslation> Expressions { get; set; }
+
 
         public override void ApplyPatch()
         {
             base.ApplyPatch();
-            if (Syntax.IsKind(SyntaxKind.ArrayInitializerExpression))
+            if (Syntax.IsKind( SyntaxKind.ArrayInitializerExpression ))
             {
                 return;
             }
@@ -45,13 +53,13 @@ namespace RoslynTypeScript.Translation
             foreach (var item in Expressions.GetEnumerable())
             {
                 var exp = item as AssignmentExpressionTranslation;
-                if(exp == null)
+                if (exp == null)
                 {
                     continue;
                 }
 
                 var identifierName = exp.Left as IdentifierNameTranslation;
-                if(identifierName == null)
+                if (identifierName == null)
                 {
                     continue;
                 }
@@ -64,7 +72,7 @@ namespace RoslynTypeScript.Translation
 
         protected override string InnerTranslate()
         {
-            if (Syntax.IsKind(SyntaxKind.ArrayInitializerExpression))
+            if (Syntax.IsKind( SyntaxKind.ArrayInitializerExpression ))
             {
                 return $"[ {Expressions.Translate()} ]"; ;
             }

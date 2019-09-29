@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,7 +19,7 @@ namespace RoslynTypeScript.Translation
         }
 
         public BracketedParameterListTranslation() { }
-        public BracketedParameterListTranslation(BracketedParameterListSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public BracketedParameterListTranslation(BracketedParameterListSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
 
         }

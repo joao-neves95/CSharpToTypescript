@@ -7,31 +7,28 @@
  */
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynTypeScript.Constants;
 using RoslynTypeScript.Translation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace RoslynTypeScript
 {
     public static class Helper
-    {    
+    {
         public static string GetAttributeList(SyntaxList<AttributeListSyntax> attributeList)
         {
             var attr = attributeList.ToString();
-            return string.IsNullOrWhiteSpace(attr) ? string.Empty : "/*" + attr + "*/" + Environment.NewLine;
+            return string.IsNullOrWhiteSpace( attr ) ? string.Empty : "/*" + attr + "*/" + Environment.NewLine;
         }
         public static string NormalizeVariabeleName(string name)
         {
-            if (name.StartsWith("@"))
+            if (name.StartsWith( "@" ))
             {
-                name = "$" + name.Substring(1);
+                name = "$" + name.Substring( 1 );
             }
 
             return name;
@@ -53,17 +50,17 @@ namespace RoslynTypeScript
 
         public static string GetNewLineIfExist(string trivia)
         {
-            return trivia.Contains(Environment.NewLine) ? Environment.NewLine : "";
+            return trivia.Contains( Environment.NewLine ) ? Environment.NewLine : "";
         }
 
         public static string GetNewLineIfExist(SyntaxTriviaList triviaList)
         {
-            return triviaList.Any(f=>f.IsKind(SyntaxKind.EndOfLineTrivia)) ? Environment.NewLine : "";
+            return triviaList.Any( f => f.IsKind( SyntaxKind.EndOfLineTrivia ) ) ? Environment.NewLine : "";
         }
 
         public static bool IsInKinds(SyntaxNode node, params SyntaxKind[] kinds)
         {
-            return kinds.Any(f => node.IsKind(f));
+            return kinds.Any( f => node.IsKind( f ) );
         }
 
         public static string OperatorToMethod(string operatorStr)
@@ -88,12 +85,12 @@ namespace RoslynTypeScript
                     || specialType == SpecialType.System_Byte
                     || specialType == SpecialType.System_UInt16
                     || specialType == SpecialType.System_UInt32
-                    || specialType == SpecialType.System_UInt64;                    
+                    || specialType == SpecialType.System_UInt64;
         }
 
         public static bool IsUnsignedInterger(SpecialType specialType)
         {
-            return                     
+            return
                     specialType == SpecialType.System_UInt16
                     || specialType == SpecialType.System_UInt32
                     || specialType == SpecialType.System_UInt64;
@@ -101,7 +98,7 @@ namespace RoslynTypeScript
 
         public static bool IsNumber(SpecialType specialType)
         {
-            if (IsInteger(specialType))
+            if (IsInteger( specialType ))
             {
                 return true;
             }
@@ -119,7 +116,7 @@ namespace RoslynTypeScript
         public static string GetTSValueTypeToCheck(TypeTranslation type, ITypeSymbol typeSymbol)
         {
 
-            if (Helper.IsNumber(typeSymbol.SpecialType))
+            if (Helper.IsNumber( typeSymbol.SpecialType ))
             {
                 return "Number";
             }
@@ -160,7 +157,7 @@ namespace RoslynTypeScript
                 return false;
             }
 
-            if (Helper.IsNumber(typeSymbol.SpecialType))
+            if (Helper.IsNumber( typeSymbol.SpecialType ))
             {
                 return false;
             }
@@ -191,24 +188,24 @@ namespace RoslynTypeScript
         }
         public static string GetDefaultValue(TypeTranslation type)
         {
-            if (type.Syntax.IsKind(SyntaxKind.BoolKeyword))
+            if (type.Syntax.IsKind( SyntaxKind.BoolKeyword ))
             {
                 return "false";
             }
 
-            if (type.Syntax.IsKind(SyntaxKind.ObjectKeyword))
+            if (type.Syntax.IsKind( SyntaxKind.ObjectKeyword ))
             {
                 return "null";
             }
 
-            if (type.Syntax.IsKind(SyntaxKind.IntKeyword)
-                || type.Syntax.IsKind(SyntaxKind.UIntKeyword)
-                || type.Syntax.IsKind(SyntaxKind.FloatKeyword)
-                || type.Syntax.IsKind(SyntaxKind.DecimalKeyword)
-                || type.Syntax.IsKind(SyntaxKind.DoubleKeyword)
-                || type.Syntax.IsKind(SyntaxKind.ByteKeyword)
-                 || type.Syntax.IsKind(SyntaxKind.LongKeyword)
-                 || type.Syntax.IsKind(SyntaxKind.ULongKeyword)
+            if (type.Syntax.IsKind( SyntaxKind.IntKeyword )
+                || type.Syntax.IsKind( SyntaxKind.UIntKeyword )
+                || type.Syntax.IsKind( SyntaxKind.FloatKeyword )
+                || type.Syntax.IsKind( SyntaxKind.DecimalKeyword )
+                || type.Syntax.IsKind( SyntaxKind.DoubleKeyword )
+                || type.Syntax.IsKind( SyntaxKind.ByteKeyword )
+                 || type.Syntax.IsKind( SyntaxKind.LongKeyword )
+                 || type.Syntax.IsKind( SyntaxKind.ULongKeyword )
                 )
             {
                 return "0";
@@ -220,7 +217,7 @@ namespace RoslynTypeScript
         public static string GetDefaultValue(TypeTranslation type, ITypeSymbol typeSymbol)
         {
 
-            if (Helper.IsNumber(typeSymbol.SpecialType))
+            if (Helper.IsNumber( typeSymbol.SpecialType ))
             {
                 return "0";
             }
@@ -264,27 +261,27 @@ namespace RoslynTypeScript
 
         public static string TranslateTypeFromSymbols(IEnumerable<ITypeSymbol> types, string ns)
         {
-            var join = string.Join(",", types.Select(f => TranslateTypeFromSymbol(f, ns)));
+            var join = string.Join( ",", types.Select( f => TranslateTypeFromSymbol( f, ns ) ) );
             return $"<{join}>";
         }
 
         public static string TranslateConvernsion(Conversion conversion, NamespaceDeclarationTranslation ns, string innerTranslation)
         {
-            var name = Helper.GetUniqueHashName(conversion.MethodSymbol.OriginalDefinition);
-            var clss = Helper.GetClassOfMethod(conversion.MethodSymbol.OriginalDefinition);
+            var name = Helper.GetUniqueHashName( conversion.MethodSymbol.OriginalDefinition );
+            var clss = Helper.GetClassOfMethod( conversion.MethodSymbol.OriginalDefinition );
             var generic = string.Empty;
             INamedTypeSymbol returnType = conversion.MethodSymbol.ReturnType as INamedTypeSymbol;
 
             if (returnType.IsGenericType)
             {
-                generic = Helper.TranslateTypeFromSymbols(returnType.TypeArguments, ns?.Name.Translate());
+                generic = Helper.TranslateTypeFromSymbols( returnType.TypeArguments, ns?.Name.Translate() );
             }
 
 
             var fullInvoke = $"{clss}.{name}";
             if (ns != null)
             {
-                fullInvoke = Helper.GetReduceNameWithNamespace(fullInvoke, ns.Name.Translate());
+                fullInvoke = Helper.GetReduceNameWithNamespace( fullInvoke, ns.Name.Translate() );
             }
             fullInvoke = $"{fullInvoke}{generic}";
 
@@ -294,7 +291,7 @@ namespace RoslynTypeScript
         public static string TranslateTypeFromSymbol(ITypeSymbol typeSymbol, string ns)
         {
 
-            if (Helper.IsNumber(typeSymbol.SpecialType))
+            if (Helper.IsNumber( typeSymbol.SpecialType ))
             {
                 return "number";
             }
@@ -323,22 +320,22 @@ namespace RoslynTypeScript
             }
 
             var fullName = typeSymbol.ToFullNameWithoutGeneric();
-            fullName = GetReduceNameWithNamespace(fullName, ns);
+            fullName = GetReduceNameWithNamespace( fullName, ns );
 
-            return $"{fullName}<{TranslateTypeFromSymbols(nameType.TypeArguments, ns)}> ";
+            return $"{fullName}<{TranslateTypeFromSymbols( nameType.TypeArguments, ns )}> ";
 
         }
 
         public static string GetReduceNameWithNamespace(string fullName, string ns)
         {
-            if (string.IsNullOrEmpty(ns))
+            if (string.IsNullOrEmpty( ns ))
             {
                 return fullName;
             }
-            var split = fullName.Split('.');
-            string namePrefix = string.Join(".", split.Take(split.Length - 1));
-            var common = FindCommonPrefix(namePrefix, ns);
-            if (string.IsNullOrWhiteSpace(common))
+            var split = fullName.Split( '.' );
+            string namePrefix = string.Join( ".", split.Take( split.Length - 1 ) );
+            var common = FindCommonPrefix( namePrefix, ns );
+            if (string.IsNullOrWhiteSpace( common ))
             {
                 return split.Last();
             }
@@ -350,16 +347,16 @@ namespace RoslynTypeScript
             {
                 semanticModel = syntax.GetSemanticModel();
             }
-            var symbolInfo = semanticModel.GetSymbolInfo(syntax.Syntax);
-            string foundNsName = FindScopeName(syntax, semanticModel);
+            var symbolInfo = semanticModel.GetSymbolInfo( syntax.Syntax );
+            string foundNsName = FindScopeName( syntax, semanticModel );
 
 
             if (foundNsName != null)
             {
-                string namespaceName = Helper.GetPrefixName(symbolInfo.Symbol);
-                string common = Helper.FindCommonPrefix(namespaceName, foundNsName);
+                string namespaceName = Helper.GetPrefixName( symbolInfo.Symbol );
+                string common = Helper.FindCommonPrefix( namespaceName, foundNsName );
 
-                string dot = string.IsNullOrEmpty(common) ? "" : ".";
+                string dot = string.IsNullOrEmpty( common ) ? "" : ".";
                 return $"{common}{dot}";
             }
             return null;
@@ -372,16 +369,16 @@ namespace RoslynTypeScript
                 semanticModel = syntax.GetSemanticModel();
             }
 
-            var symbolInfo = semanticModel.GetSymbolInfo(syntax.Syntax);
+            var symbolInfo = semanticModel.GetSymbolInfo( syntax.Syntax );
             string foundNsName = null;
-            var foundClssOrStr = (TypeDeclarationTranslation)syntax.TravelUpNotMe(f => f is ClassDeclarationTranslation || f is StructDeclarationTranslation);
+            var foundClssOrStr = (TypeDeclarationTranslation)syntax.TravelUpNotMe( f => f is ClassDeclarationTranslation || f is StructDeclarationTranslation );
             if (foundClssOrStr != null)
             {
                 var clssSemanticModel = foundClssOrStr.GetSemanticModel();
-                var clssOrStrSymbol = clssSemanticModel.GetDeclaredSymbol(foundClssOrStr.Syntax);
+                var clssOrStrSymbol = clssSemanticModel.GetDeclaredSymbol( foundClssOrStr.Syntax );
                 if (clssOrStrSymbol != null)
                 {
-                    foundNsName = Helper.GetPrefixName(clssOrStrSymbol);
+                    foundNsName = Helper.GetPrefixName( clssOrStrSymbol );
                 }
 
             }
@@ -392,7 +389,7 @@ namespace RoslynTypeScript
                 {
                     return null;
                 }
-                var foundNs = (NamespaceDeclarationTranslation)syntax.TravelUpNotMe(f => f is NamespaceDeclarationTranslation);
+                var foundNs = (NamespaceDeclarationTranslation)syntax.TravelUpNotMe( f => f is NamespaceDeclarationTranslation );
                 foundNsName = foundNs.Name.Translate();
             }
 
@@ -403,14 +400,14 @@ namespace RoslynTypeScript
         {
             SymbolDisplayFormat format = new SymbolDisplayFormat(
                 typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-                genericsOptions: SymbolDisplayGenericsOptions.None);
+                genericsOptions: SymbolDisplayGenericsOptions.None );
             if (symbol.ContainingType != null)
             {
-                return symbol.ContainingType.ToDisplayString(format);
+                return symbol.ContainingType.ToDisplayString( format );
             }
             if (symbol.ContainingNamespace != null)
             {
-                return symbol.ContainingNamespace.ToDisplayString(format);
+                return symbol.ContainingNamespace.ToDisplayString( format );
             }
 
             return null;
@@ -418,9 +415,9 @@ namespace RoslynTypeScript
 
         public static string FindCommonPrefix(string typePrefix, string scope)
         {
-            var typePrefixSplit = typePrefix.Split('.');
-            var containingPrefixSplit = scope.Split('.');
-            int length = Math.Min(typePrefixSplit.Length, containingPrefixSplit.Length);
+            var typePrefixSplit = typePrefix.Split( '.' );
+            var containingPrefixSplit = scope.Split( '.' );
+            int length = Math.Min( typePrefixSplit.Length, containingPrefixSplit.Length );
             List<string> result = new List<string>();
             int i = 0;
             for (i = 0; i < length; i++)
@@ -432,27 +429,27 @@ namespace RoslynTypeScript
             }
 
             // what if the last part of contating namespace match with first part of prefix?
-            if(i<typePrefixSplit.Length && containingPrefixSplit.Last() == typePrefixSplit[i])
+            if (i < typePrefixSplit.Length && containingPrefixSplit.Last() == typePrefixSplit[i])
             {
                 i--;
             }
 
             for (; i < typePrefixSplit.Length; i++)
             {
-                result.Add(typePrefixSplit[i]);
+                result.Add( typePrefixSplit[i] );
             }
 
-            return string.Join(".", result);
+            return string.Join( ".", result );
         }
 
         public static string ApplyThis(SemanticModel semanticModel, SyntaxTranslation syntaxTranslation, string property)
         {
-            SymbolInfo symbolInfo = semanticModel.GetSymbolInfo(syntaxTranslation.Syntax);
-            var found = (TypeDeclarationTranslation)syntaxTranslation.TravelUpNotMe(f => f is TypeDeclarationTranslation);
+            SymbolInfo symbolInfo = semanticModel.GetSymbolInfo( syntaxTranslation.Syntax );
+            var found = (TypeDeclarationTranslation)syntaxTranslation.TravelUpNotMe( f => f is TypeDeclarationTranslation );
             if (found != null)
             {
-                var classSymbol = semanticModel.GetDeclaredSymbol(found.Syntax) as INamedTypeSymbol;
-                if (classSymbol != null && IsEqualOrBaseOf(symbolInfo.Symbol.ContainingType, classSymbol))
+                var classSymbol = semanticModel.GetDeclaredSymbol( found.Syntax ) as INamedTypeSymbol;
+                if (classSymbol != null && IsEqualOrBaseOf( symbolInfo.Symbol.ContainingType, classSymbol ))
                 {
                     string prefixName = symbolInfo.Symbol.IsStatic ? classSymbol.Name : "this";
                     return $"{prefixName}.{property}";
@@ -466,18 +463,18 @@ namespace RoslynTypeScript
                     genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
                     typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameOnly,
                     memberOptions: SymbolDisplayMemberOptions.IncludeParameters | SymbolDisplayMemberOptions.IncludeType,
-                    parameterOptions: SymbolDisplayParameterOptions.IncludeType);
+                    parameterOptions: SymbolDisplayParameterOptions.IncludeType );
         public static string GetUniqueHashName(IMethodSymbol methodSymbol)
         {
-            var str = methodSymbol.ToDisplayString(ConvertHashDisplayFormat);
+            var str = methodSymbol.ToDisplayString( ConvertHashDisplayFormat );
             string name = methodSymbol.Name;
             if (name == ".ctor")
             {
-                SymbolDisplayFormat format = new SymbolDisplayFormat(SymbolDisplayGlobalNamespaceStyle.Omitted,
+                SymbolDisplayFormat format = new SymbolDisplayFormat( SymbolDisplayGlobalNamespaceStyle.Omitted,
                     SymbolDisplayTypeQualificationStyle.NameOnly, SymbolDisplayGenericsOptions.None,
-                    SymbolDisplayMemberOptions.None, parameterOptions: SymbolDisplayParameterOptions.None);
+                    SymbolDisplayMemberOptions.None, parameterOptions: SymbolDisplayParameterOptions.None );
 
-                var clssName = methodSymbol.ToDisplayString(format);
+                var clssName = methodSymbol.ToDisplayString( format );
 
                 name = "ctor";
                 //if(clssName == "SyntaxTrivia" && )
@@ -486,39 +483,39 @@ namespace RoslynTypeScript
                 //}
             }
 
-            var result = $"{name}_{Hash(str)}";
+            var result = $"{name}_{Hash( str )}";
             return result;
         }
 
         public static bool HasSource(this ISymbol symbol)
         {
-            return symbol.Locations.Where(f => f.IsInSource).Any();
+            return symbol.Locations.Where( f => f.IsInSource ).Any();
         }
 
         public static string GetUnitHashNameIfRequire(IMethodSymbol methodSymbol)
         {
             // only consider our defined overload
-            if (!HasSource(methodSymbol))
+            if (!HasSource( methodSymbol ))
             {
                 return methodSymbol.Name;
             }
             // always translate constructor
             if (methodSymbol.Name == ".ctor")
             {
-                return GetUniqueHashName(methodSymbol);
+                return GetUniqueHashName( methodSymbol );
             }
 
             if (methodSymbol.OverriddenMethod != null)
             {
-                return GetUnitHashNameIfRequire(methodSymbol.OverriddenMethod);
+                return GetUnitHashNameIfRequire( methodSymbol.OverriddenMethod );
             }
 
             // check overloading in the same class
             // ignore interface explicit
-            var overloadings = GetOverloading(methodSymbol);
+            var overloadings = GetOverloading( methodSymbol );
             if (overloadings.Length > 1)
             {
-                return GetUniqueHashName(methodSymbol);
+                return GetUniqueHashName( methodSymbol );
             }
 
             return methodSymbol.Name;
@@ -527,49 +524,49 @@ namespace RoslynTypeScript
         public static ISymbol[] GetMemberInInterfaces(this ITypeSymbol symbol, string member)
         {
             List<ISymbol> result = new List<ISymbol>();
-            result.AddRange(symbol.GetMembers(member));
-            result.AddRange(symbol.AllInterfaces.SelectMany(item => item.GetMembers(member)));
+            result.AddRange( symbol.GetMembers( member ) );
+            result.AddRange( symbol.AllInterfaces.SelectMany( item => item.GetMembers( member ) ) );
 
             return result.ToArray();
         }
 
         private static IMethodSymbol[] GetOverloading(this IMethodSymbol methodSymbol)
         {
-            return methodSymbol.ContainingType.GetMembers(methodSymbol.Name).OfType<IMethodSymbol>().ToArray();
+            return methodSymbol.ContainingType.GetMembers( methodSymbol.Name ).OfType<IMethodSymbol>().ToArray();
         }
 
         public static string Hash(string str)
         {
-            return Math.Abs(str.GetHashCode()).ToString("0000").Substring(0, 4);
+            return Math.Abs( str.GetHashCode() ).ToString( "0000" ).Substring( 0, 4 );
         }
 
         public static T GetNodeFromSymbol<T>(this ISymbol symbol) where T : SyntaxNode
         {
             var sourceTree = symbol.Locations[0].SourceTree;
-            return (T)sourceTree.GetRoot().DescendantNodes(symbol.Locations[0].SourceSpan).Last();
+            return (T)sourceTree.GetRoot().DescendantNodes( symbol.Locations[0].SourceSpan ).Last();
 
         }
 
         public static string ToFullNameWithoutGeneric(this ISymbol symbol)
         {
-            return symbol.ToDisplayString(new SymbolDisplayFormat(
+            return symbol.ToDisplayString( new SymbolDisplayFormat(
                 typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-                genericsOptions: SymbolDisplayGenericsOptions.None));
+                genericsOptions: SymbolDisplayGenericsOptions.None ) );
         }
 
         public static string ToFullNameGeneric(this ISymbol symbol)
         {
-            return symbol.ToDisplayString(new SymbolDisplayFormat(
+            return symbol.ToDisplayString( new SymbolDisplayFormat(
                 typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-                genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters));
+                genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters ) );
         }
 
         public static string GetClassOfMethod(IMethodSymbol methodSymbol)
         {
             var displayFormat = new SymbolDisplayFormat(
                 genericsOptions: SymbolDisplayGenericsOptions.None,
-                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
-            return methodSymbol.ContainingType.ToDisplayString(displayFormat);
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces );
+            return methodSymbol.ContainingType.ToDisplayString( displayFormat );
         }
 
         private static bool IsEqualOrBaseOf(INamedTypeSymbol nameTypeSymbol, INamedTypeSymbol classSymbol)
@@ -590,10 +587,10 @@ namespace RoslynTypeScript
 
         public static string StripTypeParameter(string str)
         {
-            var indx = str.IndexOf("<");
+            var indx = str.IndexOf( "<" );
             if (indx >= 0)
             {
-                return str.Substring(0, indx);
+                return str.Substring( 0, indx );
             }
 
             return str;
@@ -614,9 +611,9 @@ namespace RoslynTypeScript
             var identifierName = exp as IdentifierNameTranslation;
             if (identifierName != null)
             {
-              
 
-                var symbol = semanticModel.GetSymbolInfo(exp.Syntax);
+
+                var symbol = semanticModel.GetSymbolInfo( exp.Syntax );
                 var method = symbol.Symbol as IMethodSymbol;
                 if (method == null || method.IsStatic)
                 {
@@ -630,8 +627,8 @@ namespace RoslynTypeScript
 
             var memberAccess = exp as MemberAccessExpressionTranslation;
             if (memberAccess != null && memberAccess.Name is IdentifierNameTranslation)
-            {                
-                var symbol = semanticModel.GetSymbolInfo(memberAccess.Name.Syntax);
+            {
+                var symbol = semanticModel.GetSymbolInfo( memberAccess.Name.Syntax );
                 var method = symbol.Symbol as IMethodSymbol;
                 if (method == null || method.IsStatic)
                 {

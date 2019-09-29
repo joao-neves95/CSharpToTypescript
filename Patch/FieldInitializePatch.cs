@@ -6,13 +6,8 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynTypeScript.Translation;
+using System.Linq;
 
 namespace RoslynTypeScript.Patch
 {
@@ -31,7 +26,7 @@ namespace RoslynTypeScript.Patch
                 return;
             }
 
-            ConstructorDeclarationTranslation constructor = FindConstructor(typeTranslation);
+            ConstructorDeclarationTranslation constructor = FindConstructor( typeTranslation );
             if (constructor == null)
             {
                 return;
@@ -49,14 +44,14 @@ namespace RoslynTypeScript.Patch
                     continue;
                 }
 
-                AssignmentExpressionTranslation assignment = BuildAssignment(field);
-                constructor.Body.Statements.Insert(0, assignment);
+                AssignmentExpressionTranslation assignment = BuildAssignment( field );
+                constructor.Body.Statements.Insert( 0, assignment );
             }
         }
 
         private ConstructorDeclarationTranslation FindConstructor(TypeDeclarationTranslation typeTranslation)
         {
-            var constructor = typeTranslation.Members.GetEnumerable<ConstructorDeclarationTranslation>().FirstOrDefault(f => !f.IsDeclarationOverload);
+            var constructor = typeTranslation.Members.GetEnumerable<ConstructorDeclarationTranslation>().FirstOrDefault( f => !f.IsDeclarationOverload );
             return constructor;
         }
 

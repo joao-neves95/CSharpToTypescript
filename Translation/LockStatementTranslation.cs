@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,10 +19,10 @@ namespace RoslynTypeScript.Translation
         }
 
         public LockStatementTranslation() { }
-        public LockStatementTranslation(LockStatementSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public LockStatementTranslation(LockStatementSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Expression = syntax.Expression.Get<ExpressionTranslation>(this);
-            Statement = syntax.Statement.Get<StatementTranslation>(this);
+            Expression = syntax.Expression.Get<ExpressionTranslation>( this );
+            Statement = syntax.Statement.Get<StatementTranslation>( this );
         }
 
         public ExpressionTranslation Expression { get; set; }

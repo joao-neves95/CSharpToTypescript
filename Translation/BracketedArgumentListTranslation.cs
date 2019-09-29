@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -23,10 +17,10 @@ namespace RoslynTypeScript.Translation
             get { return (BracketedArgumentListSyntax)base.Syntax; }
             set { base.Syntax = value; }
         }
-        public BracketedArgumentListTranslation(BracketedArgumentListSyntax syntax,  SyntaxTranslation parent) : base(syntax, parent)
+        public BracketedArgumentListTranslation(BracketedArgumentListSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            
-        }     
+
+        }
 
         protected override string InnerTranslate()
         {

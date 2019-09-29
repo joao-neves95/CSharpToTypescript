@@ -8,11 +8,8 @@
 
 using Microsoft.CodeAnalysis;
 using RoslynTypeScript.Contract;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -21,7 +18,7 @@ namespace RoslynTypeScript.Translation
         public SyntaxListBaseTranslation()
         { }
 
-        public SyntaxListBaseTranslation(SyntaxTranslation parent) : base(null, parent)
+        public SyntaxListBaseTranslation(SyntaxTranslation parent) : base( null, parent )
         {
 
         }
@@ -32,7 +29,7 @@ namespace RoslynTypeScript.Translation
         {
             foreach (var item in collection)
             {
-                SyntaxCollection.Remove(item);
+                SyntaxCollection.Remove( item );
             }
         }
 
@@ -41,29 +38,29 @@ namespace RoslynTypeScript.Translation
             foreach (var item in collection)
             {
                 item.Parent = this;
-                SyntaxCollection.Add(item);
+                SyntaxCollection.Add( item );
             }
         }
 
         public void Add(SyntaxTranslation translation)
         {
-            Add(new[] { translation });
+            Add( new[] { translation } );
         }
 
         public void Remove(SyntaxTranslation translation)
         {
-            Remove(new[] { translation });
+            Remove( new[] { translation } );
         }
 
-        public void Insert(int position,SyntaxTranslation translation)
+        public void Insert(int position, SyntaxTranslation translation)
         {
-            SyntaxCollection.Insert(position, translation);
+            SyntaxCollection.Insert( position, translation );
             translation.Parent = this;
         }
 
         public override void ReplaceTranslation(SyntaxTranslation original, SyntaxTranslation newOne)
         {
-            var index = SyntaxCollection.IndexOf(original);
+            var index = SyntaxCollection.IndexOf( original );
             SyntaxCollection[index] = newOne;
             newOne.Parent = this;
         }
@@ -78,10 +75,10 @@ namespace RoslynTypeScript.Translation
 
         public override void VisitBy(ITranslationVisitor visitor)
         {
-            base.VisitBy(visitor);
+            base.VisitBy( visitor );
             foreach (var item in SyntaxCollection)
             {
-                item.VisitBy(visitor);
+                item.VisitBy( visitor );
             }
         }
 
@@ -96,23 +93,23 @@ namespace RoslynTypeScript.Translation
         public SyntaxListBaseTranslation()
         { }
 
-        public SyntaxListBaseTranslation(SyntaxTranslation parent) : base( parent)
+        public SyntaxListBaseTranslation(SyntaxTranslation parent) : base( parent )
         {
 
         }
 
-       
+
 
         public IEnumerable<ST> GetEnumerable()
         {
-            return SyntaxCollection.Select(f => (ST)f).ToArray();
+            return SyntaxCollection.Select( f => (ST)f ).ToArray();
         }
 
         public IEnumerable<TT> GetEnumerable<TT>() where TT : SyntaxTranslation
         {
-            return SyntaxCollection.Where(f => f is TT).Select(f => (TT)f).ToArray();
+            return SyntaxCollection.Where( f => f is TT ).Select( f => (TT)f ).ToArray();
         }
 
-  
+
     }
 }

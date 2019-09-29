@@ -6,13 +6,8 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -27,10 +22,10 @@ namespace RoslynTypeScript.Translation
         public SeparatedSyntaxListTranslation<VariableDeclaratorSyntax, VariableDeclaratorTranslation> Variables { get; set; }
 
 
-        public VariableDeclarationTranslation(VariableDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public VariableDeclarationTranslation(VariableDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Type = syntax.Type.Get<TypeTranslation>(this);
-            Variables = syntax.Variables.Get<VariableDeclaratorSyntax, VariableDeclaratorTranslation>(this);
+            Type = syntax.Type.Get<TypeTranslation>( this );
+            Variables = syntax.Variables.Get<VariableDeclaratorSyntax, VariableDeclaratorTranslation>( this );
             if (!syntax.Type.IsVar)
             {
                 Variables.GetEnumerable().First().FirstType = Type;
@@ -60,8 +55,8 @@ namespace RoslynTypeScript.Translation
         protected override string InnerTranslate()
         {
             if (ExcludeVar)
-                return string.Format("{0}", Variables.Translate());
-            return string.Format("var {0}", Variables.Translate());
+                return string.Format( "{0}", Variables.Translate() );
+            return string.Format( "var {0}", Variables.Translate() );
         }
     }
 }

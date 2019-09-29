@@ -8,11 +8,7 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -28,12 +24,12 @@ namespace RoslynTypeScript.Translation
 
         public SyntaxListTranslation<MemberDeclarationSyntax, MemberDeclarationTranslation> Members { get; set; }
 
-        public CompilationUnitTranslation(CompilationUnitSyntax syntax, SyntaxTranslation parent) : base(syntax, null)
+        public CompilationUnitTranslation(CompilationUnitSyntax syntax, SyntaxTranslation parent) : base( syntax, null )
         {
             //Compilation = compilation;
             //this.semanticModel = semanticModel;
-            Members = syntax.Members.Get<MemberDeclarationSyntax, MemberDeclarationTranslation>(this);
-        }        
+            Members = syntax.Members.Get<MemberDeclarationSyntax, MemberDeclarationTranslation>( this );
+        }
 
         public Solution Solution { get; set; }
 
@@ -48,7 +44,7 @@ namespace RoslynTypeScript.Translation
             {
                 if (semanticModel == null)
                 {
-                    semanticModel = Compilation.GetSemanticModel(Syntax.SyntaxTree);
+                    semanticModel = Compilation.GetSemanticModel( Syntax.SyntaxTree );
                 }
 
                 return semanticModel;

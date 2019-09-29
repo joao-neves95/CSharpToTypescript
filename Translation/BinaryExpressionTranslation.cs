@@ -9,11 +9,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,10 +20,10 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
         public BinaryExpressionTranslation() { }
-        public BinaryExpressionTranslation(BinaryExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public BinaryExpressionTranslation(BinaryExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Left = syntax.Left.Get<ExpressionTranslation>(this);
-            Right = syntax.Right.Get<ExpressionTranslation>(this);
+            Left = syntax.Left.Get<ExpressionTranslation>( this );
+            Right = syntax.Right.Get<ExpressionTranslation>( this );
         }
 
         public ExpressionTranslation Left { get; set; }
@@ -36,19 +31,19 @@ namespace RoslynTypeScript.Translation
 
         protected override string InnerTranslate()
         {
-            string tokenStr = Syntax.OperatorToken.ToString();           
+            string tokenStr = Syntax.OperatorToken.ToString();
 
-            if (Syntax.IsKind(SyntaxKind.AsExpression))
+            if (Syntax.IsKind( SyntaxKind.AsExpression ))
             {
                 return $"__as__<{Right.Translate()}> ({Left.Translate()},{Right.Translate()})";
             }
 
-            if (Syntax.IsKind(SyntaxKind.IsExpression))
+            if (Syntax.IsKind( SyntaxKind.IsExpression ))
             {
                 tokenStr = "instanceof";
                 var right = (TypeTranslation)Right;
                 var rightStr = right.GetTypeIgnoreGeneric();
-                switch(rightStr)
+                switch (rightStr)
                 {
                     case "boolean":
                     case "number":
@@ -59,25 +54,25 @@ namespace RoslynTypeScript.Translation
                 return $"{Left.Translate()} instanceof {rightStr}";
             }
 
-            if (Syntax.IsKind(SyntaxKind.CoalesceExpression))
+            if (Syntax.IsKind( SyntaxKind.CoalesceExpression ))
             {
                 // only process with case left is identifier name
-                if(Left is IdentifierNameTranslation || Left is MemberAccessExpressionTranslation)
+                if (Left is IdentifierNameTranslation || Left is MemberAccessExpressionTranslation)
                 {
                     // ?? -> != null ? :
                     string leftStr = Left.Translate();
                     string rightStr = Right.Translate();
-                    
+
                     return $"{leftStr} != null ? {leftStr} : {rightStr}";
-                }                
+                }
             }
 
-            if (Syntax.IsKind(SyntaxKind.DivideAssignmentExpression) )
+            if (Syntax.IsKind( SyntaxKind.DivideAssignmentExpression ))
             {
                 return $"{Left.Translate()} = {Left.Translate()} \\ {Right.Translate()}";
             }
 
-            if (Syntax.IsKind(SyntaxKind.MultiplyAssignmentExpression))
+            if (Syntax.IsKind( SyntaxKind.MultiplyAssignmentExpression ))
             {
                 return $"{Left.Translate()} = {Left.Translate()} * {Right.Translate()}";
             }

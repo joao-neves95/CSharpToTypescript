@@ -6,15 +6,9 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynTypeScript.Contract;
 using RoslynTypeScript.Patch;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -30,14 +24,14 @@ namespace RoslynTypeScript.Translation
         public MethodDeclarationTranslation()
         { }
 
-        public MethodDeclarationTranslation(MethodDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public MethodDeclarationTranslation(MethodDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            ReturnType = syntax.ReturnType.Get<TypeTranslation>(this);
-            SemicolonToken = syntax.SemicolonToken.Get(this);
-            Identifier = syntax.Identifier.Get(this);
-            TypeParameterList = syntax.TypeParameterList.Get<TypeParameterListTranslation>(this);
-            ConstraintClauses = syntax.ConstraintClauses.Get<TypeParameterConstraintClauseSyntax, TypeParameterConstraintClauseTranslation>(this);
-            
+            ReturnType = syntax.ReturnType.Get<TypeTranslation>( this );
+            SemicolonToken = syntax.SemicolonToken.Get( this );
+            Identifier = syntax.Identifier.Get( this );
+            TypeParameterList = syntax.TypeParameterList.Get<TypeParameterListTranslation>( this );
+            ConstraintClauses = syntax.ConstraintClauses.Get<TypeParameterConstraintClauseSyntax, TypeParameterConstraintClauseTranslation>( this );
+
         }
 
         //public SyntaxList<TypeParameterConstraintClauseSyntax> ConstraintClauses { get; }
@@ -54,11 +48,11 @@ namespace RoslynTypeScript.Translation
         public override void ApplyPatch()
         {
             GenericConstrantsPatch genericConstrantsPatch = new GenericConstrantsPatch();
-            genericConstrantsPatch.Apply(this);
+            genericConstrantsPatch.Apply( this );
             base.ApplyPatch();
 
             var arrayInitReturnForYieldPatch = new ArrayInitReturnForYieldPatch();
-            arrayInitReturnForYieldPatch.Apply(this);
+            arrayInitReturnForYieldPatch.Apply( this );
             // what if this methid is static, and this class/struct is generic?
             // we must move this generic to static method
 
@@ -68,17 +62,18 @@ namespace RoslynTypeScript.Translation
             }
 
             var clssStr = GetAncestor<ClassStructDeclarationTranslation>();
-            if(clssStr == null || clssStr.TypeParameterList == null)
+            if (clssStr == null || clssStr.TypeParameterList == null)
             {
                 return;
             }
 
-            if(this.TypeParameterList != null)
+            if (this.TypeParameterList != null)
             {
                 return;
             }
 
-            this.TypeParameterList = new TypeParameterListTranslation() {
+            this.TypeParameterList = new TypeParameterListTranslation()
+            {
                 Parent = this,
                 SyntaxString = clssStr.TypeParameterList.Translate()
             };
@@ -95,18 +90,18 @@ namespace RoslynTypeScript.Translation
 
             if (SemicolonToken == null || SemicolonToken.IsEmpty)
             {
-                return string.Format(@"{0} {1} {2}: {3}
+                return string.Format( @"{0} {1} {2}: {3}
 {4}",
             Modifiers.Translate(),
               Identifier.Translate() + TypeParameterList?.Translate() ?? "",
              ParameterList.Translate(),
               ReturnType.Translate(),
-              Body?.Translate() ?? ";");
+              Body?.Translate() ?? ";" );
             }
 
             string appendStr = ";";
-            var found = (TypeDeclarationTranslation)TravelUpNotMe(f => f is TypeDeclarationTranslation);
-            if(found is ClassDeclarationTranslation && found.Modifiers.IsAbstract && !this.IsOverloadedDeclaration)
+            var found = (TypeDeclarationTranslation)TravelUpNotMe( f => f is TypeDeclarationTranslation );
+            if (found is ClassDeclarationTranslation && found.Modifiers.IsAbstract && !this.IsOverloadedDeclaration)
             {
                 appendStr = "{ throw new Error('not implemented'); }";
             }

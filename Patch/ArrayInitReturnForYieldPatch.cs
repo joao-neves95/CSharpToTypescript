@@ -6,11 +6,6 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoslynTypeScript.Constants;
 using RoslynTypeScript.Translation;
 
@@ -40,8 +35,8 @@ namespace RoslynTypeScript.Patch
             var returnStatement = new ReturnStatementTranslation();
             returnStatement.SyntaxString = $"return {TC.YieldResultName};";
 
-            method.Body.Statements.Insert(0, arrayCreation);
-            method.Body.Statements.Add(returnStatement);
+            method.Body.Statements.Insert( 0, arrayCreation );
+            method.Body.Statements.Add( returnStatement );
         }
     }
 }

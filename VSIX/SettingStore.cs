@@ -6,16 +6,11 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.Settings;
-using Microsoft.VisualStudio.Shell.Settings;
 using Microsoft.VisualStudio.Shell;
-using System.Xml.Serialization;
+using Microsoft.VisualStudio.Shell.Settings;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace CSharpToTypescript.VSIX
 {
@@ -35,11 +30,11 @@ namespace CSharpToTypescript.VSIX
 
         protected SettingStore()
         {
-            SettingsManager settingsManager = new ShellSettingsManager(ServiceProvider.GlobalProvider);
-             userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
-            if (!userSettingsStore.CollectionExists(CollectionPath))
+            SettingsManager settingsManager = new ShellSettingsManager( ServiceProvider.GlobalProvider );
+            userSettingsStore = settingsManager.GetWritableSettingsStore( SettingsScope.UserSettings );
+            if (!userSettingsStore.CollectionExists( CollectionPath ))
             {
-                userSettingsStore.CreateCollection(CollectionPath);
+                userSettingsStore.CreateCollection( CollectionPath );
             }
         }
 
@@ -47,17 +42,17 @@ namespace CSharpToTypescript.VSIX
         {
             get
             {
-                if (!userSettingsStore.PropertyExists(CollectionPath, IsConvertMemberToCamelCaseConst))
+                if (!userSettingsStore.PropertyExists( CollectionPath, IsConvertMemberToCamelCaseConst ))
                 {
                     return false;
                 }
 
-                return userSettingsStore.GetBoolean(CollectionPath, IsConvertMemberToCamelCaseConst);
+                return userSettingsStore.GetBoolean( CollectionPath, IsConvertMemberToCamelCaseConst );
             }
             set
             {
 
-                userSettingsStore.SetBoolean(CollectionPath, IsConvertMemberToCamelCaseConst, value);
+                userSettingsStore.SetBoolean( CollectionPath, IsConvertMemberToCamelCaseConst, value );
             }
         }
 
@@ -65,16 +60,17 @@ namespace CSharpToTypescript.VSIX
         {
             get
             {
-                if (!userSettingsStore.PropertyExists(CollectionPath, IsConvertToInterfaceConst)){
+                if (!userSettingsStore.PropertyExists( CollectionPath, IsConvertToInterfaceConst ))
+                {
                     return false;
                 }
 
-                return userSettingsStore.GetBoolean(CollectionPath,IsConvertToInterfaceConst);
+                return userSettingsStore.GetBoolean( CollectionPath, IsConvertToInterfaceConst );
             }
             set
             {
-                
-                userSettingsStore.SetBoolean(CollectionPath, IsConvertToInterfaceConst, value);
+
+                userSettingsStore.SetBoolean( CollectionPath, IsConvertToInterfaceConst, value );
             }
         }
 
@@ -82,17 +78,17 @@ namespace CSharpToTypescript.VSIX
         {
             get
             {
-                if (!userSettingsStore.PropertyExists(CollectionPath, IsConvertListToArrayConst))
+                if (!userSettingsStore.PropertyExists( CollectionPath, IsConvertListToArrayConst ))
                 {
                     return false;
                 }
 
-                return userSettingsStore.GetBoolean(CollectionPath, IsConvertListToArrayConst);
+                return userSettingsStore.GetBoolean( CollectionPath, IsConvertListToArrayConst );
             }
             set
             {
 
-                userSettingsStore.SetBoolean(CollectionPath, IsConvertListToArrayConst, value);
+                userSettingsStore.SetBoolean( CollectionPath, IsConvertListToArrayConst, value );
             }
         }
 
@@ -100,33 +96,33 @@ namespace CSharpToTypescript.VSIX
         {
             get
             {
-                if (!userSettingsStore.PropertyExists(CollectionPath, IsInterfaceOptionalPropertiesConsts))
+                if (!userSettingsStore.PropertyExists( CollectionPath, IsInterfaceOptionalPropertiesConsts ))
                 {
                     return false;
                 }
 
-                return userSettingsStore.GetBoolean(CollectionPath, IsInterfaceOptionalPropertiesConsts);
+                return userSettingsStore.GetBoolean( CollectionPath, IsInterfaceOptionalPropertiesConsts );
             }
             set
             {
 
-                userSettingsStore.SetBoolean(CollectionPath, IsInterfaceOptionalPropertiesConsts, value);
+                userSettingsStore.SetBoolean( CollectionPath, IsInterfaceOptionalPropertiesConsts, value );
             }
         }
 
-        XmlSerializer serializer = new XmlSerializer(typeof(TypeNameReplacementData[]));
+        XmlSerializer serializer = new XmlSerializer( typeof( TypeNameReplacementData[] ) );
         private TypeNameReplacementData[] replacedTypeNameArray;
 
         public TypeNameReplacementData[] ReplacedTypeNameArray
         {
             get
             {
-                if(replacedTypeNameArray != null)
+                if (replacedTypeNameArray != null)
                 {
                     return replacedTypeNameArray;
                 }
 
-                if (!userSettingsStore.PropertyExists(CollectionPath, ReplacedTypeNameArrayConst))
+                if (!userSettingsStore.PropertyExists( CollectionPath, ReplacedTypeNameArrayConst ))
                 {
                     return new TypeNameReplacementData[] {
                         new TypeNameReplacementData
@@ -142,22 +138,22 @@ namespace CSharpToTypescript.VSIX
                     };
                 }
 
-                using (StringReader textReader = new StringReader(userSettingsStore.GetString(CollectionPath, ReplacedTypeNameArrayConst)))
+                using (StringReader textReader = new StringReader( userSettingsStore.GetString( CollectionPath, ReplacedTypeNameArrayConst ) ))
                 {
-                    replacedTypeNameArray = (TypeNameReplacementData[])serializer.Deserialize(textReader);
+                    replacedTypeNameArray = (TypeNameReplacementData[])serializer.Deserialize( textReader );
                 }
 
                 return replacedTypeNameArray;
-                 
+
             }
             set
             {
                 using (StringWriter textWriter = new StringWriter())
                 {
-                    serializer.Serialize(textWriter, value);
-                    userSettingsStore.SetString(CollectionPath, ReplacedTypeNameArrayConst, textWriter.ToString());
+                    serializer.Serialize( textWriter, value );
+                    userSettingsStore.SetString( CollectionPath, ReplacedTypeNameArrayConst, textWriter.ToString() );
                     replacedTypeNameArray = value;
-                }       
+                }
             }
         }
 
@@ -165,17 +161,17 @@ namespace CSharpToTypescript.VSIX
         {
             get
             {
-                if (!userSettingsStore.PropertyExists(CollectionPath, AddIPrefixInterfaceDeclarationConst))
+                if (!userSettingsStore.PropertyExists( CollectionPath, AddIPrefixInterfaceDeclarationConst ))
                 {
                     return false;
                 }
 
-                return userSettingsStore.GetBoolean(CollectionPath, AddIPrefixInterfaceDeclarationConst);
+                return userSettingsStore.GetBoolean( CollectionPath, AddIPrefixInterfaceDeclarationConst );
             }
             set
             {
 
-                userSettingsStore.SetBoolean(CollectionPath, AddIPrefixInterfaceDeclarationConst, value);
+                userSettingsStore.SetBoolean( CollectionPath, AddIPrefixInterfaceDeclarationConst, value );
             }
         }
     }

@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -24,10 +18,10 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
 
-        public QualifiedNameTranslation(QualifiedNameSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public QualifiedNameTranslation(QualifiedNameSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Left = syntax.Left.Get<NameTranslation>(this);
-            Right = syntax.Right.Get<SimpleNameTranslation>(this);
+            Left = syntax.Left.Get<NameTranslation>( this );
+            Right = syntax.Right.Get<SimpleNameTranslation>( this );
 
             var genericTranslation = Left as GenericNameTranslation;
             if (genericTranslation != null)
@@ -41,11 +35,11 @@ namespace RoslynTypeScript.Translation
             {
                 simpleName.DetectApplyThis = false;
                 var identifierName = simpleName as IdentifierNameTranslation;
-                if (genericTranslation != null && identifierName!=null)
+                if (genericTranslation != null && identifierName != null)
                 {
                     identifierName.TypeArgumentList = genericTranslation.TypeArgumentList;
                 }
-                
+
             }
         }
 

@@ -6,18 +6,14 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoslynTypeScript.Translation;
+using System.Linq;
 
 namespace RoslynTypeScript.VirtualTranslation.Delegates
 {
     public class ComparisonGenericNameTranslation : BaseFunctionGenericNameTranslation
     {
-        public ComparisonGenericNameTranslation(GenericNameTranslation genericNameTranslation) : base(genericNameTranslation)
+        public ComparisonGenericNameTranslation(GenericNameTranslation genericNameTranslation) : base( genericNameTranslation )
         {
         }
 

@@ -6,16 +6,8 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoslynTypeScript.Patch;
 using RoslynTypeScript.Contract;
-using RoslynTypeScript.Constants;
 
 namespace RoslynTypeScript.Translation
 {
@@ -27,9 +19,9 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
         //public StructDeclarationTranslation() { }
-        public StructDeclarationTranslation(StructDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
-        {              
-            if(BaseList == null)
+        public StructDeclarationTranslation(StructDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
+        {
+            if (BaseList == null)
             {
                 BaseList = new BaseListTranslation();
                 BaseList.Parent = this;

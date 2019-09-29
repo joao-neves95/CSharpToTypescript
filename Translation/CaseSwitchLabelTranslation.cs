@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,12 +19,12 @@ namespace RoslynTypeScript.Translation
         }
 
         public CaseSwitchLabelTranslation() { }
-        public CaseSwitchLabelTranslation(CaseSwitchLabelSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public CaseSwitchLabelTranslation(CaseSwitchLabelSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Value = syntax.Value.Get<ExpressionTranslation>(this);
+            Value = syntax.Value.Get<ExpressionTranslation>( this );
         }
 
-        
+
         public ExpressionTranslation Value { get; set; }
 
         protected override string InnerTranslate()

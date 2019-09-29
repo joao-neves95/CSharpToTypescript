@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -24,12 +18,12 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
 
-        public InterfaceDeclarationTranslation(InterfaceDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public InterfaceDeclarationTranslation(InterfaceDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
 
             if (syntax.BaseList != null)
             {
-                BaseList = syntax.BaseList.Get<BaseListTranslation>(this);
+                BaseList = syntax.BaseList.Get<BaseListTranslation>( this );
                 BaseList.IsForInterface = true;
             }
         }

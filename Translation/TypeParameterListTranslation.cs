@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -27,9 +21,9 @@ namespace RoslynTypeScript.Translation
 
         public TypeParameterListTranslation() { }
 
-        public TypeParameterListTranslation(TypeParameterListSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public TypeParameterListTranslation(TypeParameterListSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Parameters = syntax.Parameters.Get<TypeParameterSyntax, TypeParameterTranslation>(this);
+            Parameters = syntax.Parameters.Get<TypeParameterSyntax, TypeParameterTranslation>( this );
         }
 
         private bool isExcludeConstraint;
@@ -48,7 +42,7 @@ namespace RoslynTypeScript.Translation
 
         protected override string InnerTranslate()
         {
-            return string.Format("<{0}>", Parameters.Translate());
+            return string.Format( "<{0}>", Parameters.Translate() );
         }
     }
 }

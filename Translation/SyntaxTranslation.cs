@@ -10,15 +10,12 @@ using Microsoft.CodeAnalysis;
 using RoslynTypeScript.Contract;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace RoslynTypeScript.Translation
 {
-    [DebuggerDisplay("Syntax = {Syntax}")]
+    [DebuggerDisplay( "Syntax = {Syntax}" )]
     public abstract class SyntaxTranslation
     {
         private const string ParentName = "Parent";
@@ -50,7 +47,7 @@ namespace RoslynTypeScript.Translation
         public Compilation Compilation { get; set; }
 
         public virtual string Translate()
-        {           
+        {
 
             var result = string.Empty;
 
@@ -63,7 +60,7 @@ namespace RoslynTypeScript.Translation
                 result = $"{Prefix}{InnerTranslate()}{Suffix}";
             }
 
-            return $"{ result.Trim('\r', '\n')}";
+            return $"{ result.Trim( '\r', '\n' )}";
         }
 
         public override string ToString()
@@ -114,17 +111,17 @@ namespace RoslynTypeScript.Translation
 
         public virtual void VisitBy(ITranslationVisitor visitor)
         {
-            visitor.Visit(this);
+            visitor.Visit( this );
             foreach (var prop in GetChildrenTranslation())
             {
-                prop.VisitBy(visitor);
+                prop.VisitBy( visitor );
             }
         }
 
         public IEnumerable<T> Decendants<T>() where T : SyntaxTranslation
         {
             var visitor = new GetDecendantsVistor<T>();
-            this.VisitBy(visitor);
+            this.VisitBy( visitor );
             return visitor.Founds;
         }
 
@@ -142,7 +139,7 @@ namespace RoslynTypeScript.Translation
             SyntaxTranslation translation = this;
             while (translation != null)
             {
-                if (func(translation))
+                if (func( translation ))
                 {
                     return translation;
                 }
@@ -157,7 +154,7 @@ namespace RoslynTypeScript.Translation
             SyntaxTranslation translation = this.Parent;
             while (translation != null)
             {
-                if (func(translation))
+                if (func( translation ))
                 {
                     return translation;
                 }
@@ -169,13 +166,13 @@ namespace RoslynTypeScript.Translation
 
         public T GetAncestor<T>() where T : SyntaxTranslation
         {
-            var found = TravelUp(f => f is T);
+            var found = TravelUp( f => f is T );
             return (T)found;
         }
 
         public bool IsInScope<T>()
         {
-            var found = TravelUp(f => f != this && f is T);
+            var found = TravelUp( f => f != this && f is T );
             return found != null;
         }
 
@@ -190,15 +187,15 @@ namespace RoslynTypeScript.Translation
         public virtual void ReplaceTranslation(SyntaxTranslation original, SyntaxTranslation newOne)
         {
             Type type = this.GetType();
-            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var properties = type.GetProperties( BindingFlags.Public | BindingFlags.Instance );
             foreach (var item in properties)
             {
-                if (item.Name != ParentName && item.PropertyType.IsAssignableFrom(original.GetType()))
+                if (item.Name != ParentName && item.PropertyType.IsAssignableFrom( original.GetType() ))
                 {
-                    SyntaxTranslation prop = (SyntaxTranslation)item.GetValue(this);
+                    SyntaxTranslation prop = (SyntaxTranslation)item.GetValue( this );
                     if (prop == original)
                     {
-                        item.SetValue(this, newOne);
+                        item.SetValue( this, newOne );
                         newOne.Parent = this;
                     }
 
@@ -211,12 +208,12 @@ namespace RoslynTypeScript.Translation
         private IEnumerable<SyntaxTranslation> GetChildrenTranslation()
         {
             Type type = this.GetType();
-            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var properties = type.GetProperties( BindingFlags.Public | BindingFlags.Instance );
             foreach (var item in properties)
             {
-                if (item.Name != ParentName && typeof(SyntaxTranslation).IsAssignableFrom(item.PropertyType))
+                if (item.Name != ParentName && typeof( SyntaxTranslation ).IsAssignableFrom( item.PropertyType ))
                 {
-                    SyntaxTranslation prop = (SyntaxTranslation)item.GetValue(this);
+                    SyntaxTranslation prop = (SyntaxTranslation)item.GetValue( this );
                     if (prop != null)
                     {
                         yield return prop;
@@ -252,7 +249,7 @@ namespace RoslynTypeScript.Translation
         {
             if (translation is T)
             {
-                Founds.Add((T)translation);
+                Founds.Add( (T)translation );
             }
         }
     }

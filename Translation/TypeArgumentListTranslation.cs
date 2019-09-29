@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,12 +19,12 @@ namespace RoslynTypeScript.Translation
         }
 
         public TypeArgumentListTranslation() { }
-        public TypeArgumentListTranslation(TypeArgumentListSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public TypeArgumentListTranslation(TypeArgumentListSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Arguments = syntax.Arguments.Get<TypeSyntax, TypeTranslation>(this);
+            Arguments = syntax.Arguments.Get<TypeSyntax, TypeTranslation>( this );
         }
 
-        public SeparatedSyntaxListTranslation<TypeSyntax,TypeTranslation> Arguments { get; set; }
+        public SeparatedSyntaxListTranslation<TypeSyntax, TypeTranslation> Arguments { get; set; }
 
         protected override string InnerTranslate()
         {

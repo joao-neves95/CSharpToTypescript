@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,9 +19,9 @@ namespace RoslynTypeScript.Translation
         }
 
         public ImplicitArrayCreationExpressionTranslation() { }
-        public ImplicitArrayCreationExpressionTranslation(ImplicitArrayCreationExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public ImplicitArrayCreationExpressionTranslation(ImplicitArrayCreationExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Initializer = syntax.Initializer.Get<InitializerExpressionTranslation>(this);
+            Initializer = syntax.Initializer.Get<InitializerExpressionTranslation>( this );
         }
 
         public InitializerExpressionTranslation Initializer { get; set; }

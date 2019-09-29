@@ -7,18 +7,24 @@
  */
 
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
     public class GenericTranslation : CSharpSyntaxTranslation
+
+    /* Unmerged change from project 'CSharpToTypescript (net472)'
+    Before:
+        {
+
+            public GenericTranslation(SyntaxNode syntax,  SyntaxTranslation parent) : base(syntax, parent)
+    After:
+        {
+
+            public GenericTranslation(SyntaxNode syntax,  SyntaxTranslation parent) : base(syntax, parent)
+    */
     {
-        
-        public GenericTranslation(SyntaxNode syntax,  SyntaxTranslation parent) : base(syntax, parent)
+
+        public GenericTranslation(SyntaxNode syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
         }
 

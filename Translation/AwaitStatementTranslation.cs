@@ -6,13 +6,7 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -22,12 +16,23 @@ namespace RoslynTypeScript.Translation
         {
             get { return (AwaitExpressionSyntax)base.Syntax; }
             set { base.Syntax = value; }
+
+            /* Unmerged change from project 'CSharpToTypescript (net472)'
+            Before:
+                    }
+
+                    public AwaitExpressionTranslation() { }
+            After:
+                    }
+
+                    public AwaitExpressionTranslation() { }
+            */
         }
-        
+
         public AwaitExpressionTranslation() { }
-        public AwaitExpressionTranslation(AwaitExpressionSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public AwaitExpressionTranslation(AwaitExpressionSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Expression = syntax.Expression.Get<ExpressionTranslation>(this);
+            Expression = syntax.Expression.Get<ExpressionTranslation>( this );
         }
 
         public ExpressionTranslation Expression { get; set; }

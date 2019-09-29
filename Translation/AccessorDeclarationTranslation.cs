@@ -6,14 +6,8 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RoslynTypeScript.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoslynTypeScript.Translation
 {
@@ -25,10 +19,10 @@ namespace RoslynTypeScript.Translation
             set { base.Syntax = value; }
         }
 
-        public AccessorDeclarationTranslation(AccessorDeclarationSyntax syntax, SyntaxTranslation parent) : base(syntax, parent)
+        public AccessorDeclarationTranslation(AccessorDeclarationSyntax syntax, SyntaxTranslation parent) : base( syntax, parent )
         {
-            Body = syntax.Body.Get<BlockTranslation>(this);
-            Modifiers = syntax.Modifiers.Get(this);
+            Body = syntax.Body.Get<BlockTranslation>( this );
+            Modifiers = syntax.Modifiers.Get( this );
         }
 
 
@@ -80,13 +74,13 @@ namespace RoslynTypeScript.Translation
 
             if (keyword == "get")
             {
-                return string.Format(@"{0} get {1}(): {2}
-{3}", Modifiers.Translate(), ancestor.Identifier.Translate(), ancestor.Type.Translate(), Body.Translate());
+                return string.Format( @"{0} get {1}(): {2}
+{3}", Modifiers.Translate(), ancestor.Identifier.Translate(), ancestor.Type.Translate(), Body.Translate() );
 
             }
 
-            return string.Format(@"{0} set {1}(value: {2})
-{3}", Modifiers.Translate(), ancestor.Identifier.Translate(), ancestor.Type.Translate(), Body.Translate());
+            return string.Format( @"{0} set {1}(value: {2})
+{3}", Modifiers.Translate(), ancestor.Identifier.Translate(), ancestor.Type.Translate(), Body.Translate() );
         }
 
         public bool IsShorten()
