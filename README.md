@@ -2,7 +2,7 @@
 
 ----
 
-**Original Repository: https://github.com/nhabuiduc/CSharpToTypescript**
+**Original Repository: https://github.com/nhabuiduc/TypescriptSyntaxPaste**
 
 Modified and adapted to migrate to .NET Core 3 and compile with Visual Studio 2019 (originally only compilable with Visual Studio 2015).<br/>
 
