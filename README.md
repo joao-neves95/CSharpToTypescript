@@ -9,6 +9,16 @@ Modified and adapted to migrate to .NET Core 3 and compile with Visual Studio 20
 It does not work as a Visual Studio Extension anymore.<br/>
 Its intent now, is to be used as a library.
 
+### How to use CSharpToTypescript:
+
+```
+
+string typescriptInput = @"class Foo{}";
+CSharpToTypescriptConverter cSharpToTypescriptConverter = new CSharpToTypescriptConverter();
+string typescriptCode = cSharpToTypescriptConverter.ConvertToTypescript( typescriptInput, new MySettingStore() );
+
+```
+
 ----
 
 - Visual Studio Extension which converts C# SYNTAX to Typescript SYNTAX.
