@@ -11,7 +11,7 @@
     <RepositoryType>Git</RepositoryType>
     <NeutralLanguage />
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>João Pedro Martins Neves (shivayl)</Authors>
     <Company>João Pedro Martins Neves (shivayl)</Company>
