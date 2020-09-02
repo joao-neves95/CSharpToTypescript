@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;net472</TargetFrameworks>
@@ -11,8 +11,8 @@
     <RepositoryType>Git</RepositoryType>
     <NeutralLanguage />
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.2</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.3</Version>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>João Pedro Martins Neves (shivayl)</Authors>
     <Company>João Pedro Martins Neves (shivayl)</Company>
     <Product>CSharpToTypescript</Product>
