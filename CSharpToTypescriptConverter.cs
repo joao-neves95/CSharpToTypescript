@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2019 João Pedro Martins Neves (shivayl) - All Rights Reserved.
  *
  * CSharpToTypescript is licensed under the GNU Lesser General Public License (LGPL),
@@ -6,15 +6,19 @@
  *
  */
 
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using RoslynTypeScript.Translation;
+
 using System;
 using System.Linq;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+
+using RoslynTypeScript.Translation;
+
+using CSharpToTypescript.Contract;
 
 namespace CSharpToTypescript
 {
-    public class CSharpToTypescriptConverter
+    public class CSharpToTypescriptConverter : ICSharpToTypescriptConverter
     {
         private MetadataReference mscorlib;
         private MetadataReference Mscorlib
