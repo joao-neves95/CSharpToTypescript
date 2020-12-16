@@ -9,7 +9,7 @@ Modified and adapted to migrate to .NET Core 3 and compile with Visual Studio 20
 It does not work as a Visual Studio Extension anymore.<br/>
 Its intent now, is to be used as a library.
 
-### Download (NuGet)
+### Download ([NuGet](https://www.nuget.org/packages/LibCSharpToTypescript/))
 ```dotnet add package LibCSharpToTypescript```
 
 ### How to use CSharpToTypescript:
